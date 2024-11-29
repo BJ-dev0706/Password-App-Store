@@ -1,8 +1,7 @@
 import os
 import sqlite3
-import pandas as pd
 import customtkinter as ctk
-from tkinter import ttk, filedialog, messagebox
+from tkinter import ttk, messagebox
 from cryptography.fernet import Fernet
 import secrets
 import string
