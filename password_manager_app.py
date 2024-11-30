@@ -26,7 +26,7 @@ class PasswordManagerApp(ctk.CTk):
 
         # Configure grid rows to behave properly
         self.sidebar_frame.grid_rowconfigure(0, weight=0)  # First label - not resizable
-        self.sidebar_frame.grid_rowconfigure(1, weight=0)  # Account Name field - not resizable
+        self.sidebar_frame.grid_rowconfigure(1, weight=0)  # Website Url field - not resizable
         self.sidebar_frame.grid_rowconfigure(2, weight=0)  # Username field - not resizable
         self.sidebar_frame.grid_rowconfigure(3, weight=0)  # Password field - not resizable
         self.sidebar_frame.grid_rowconfigure(4, weight=0)  # Password entry - not resizable
@@ -38,7 +38,7 @@ class PasswordManagerApp(ctk.CTk):
         # Add Account Section
         ctk.CTkLabel(self.sidebar_frame, text="Add Account", font=("Arial", 18)).grid(row=0, column=0, padx=10, pady=(10, 20))
 
-        ctk.CTkLabel(self.sidebar_frame, text="Account Name:").grid(row=1, column=0, padx=10, pady=5)
+        ctk.CTkLabel(self.sidebar_frame, text="Website Url:").grid(row=1, column=0, padx=10, pady=5)
         self.account_name_entry = ctk.CTkEntry(self.sidebar_frame, width=250)
         self.account_name_entry.grid(row=2, column=0, padx=10, pady=5)
 
@@ -89,7 +89,7 @@ class PasswordManagerApp(ctk.CTk):
         # Treeview to display accounts
         self.tree = ttk.Treeview(tree_frame, columns=("ID", "Account", "Username", "Password", "Note"), show="headings")
         self.tree.heading("ID", text="ID")
-        self.tree.heading("Account", text="Account Name")
+        self.tree.heading("Account", text="Website Url")
         self.tree.heading("Username", text="Username")
         self.tree.heading("Password", text="Password")
         self.tree.heading("Note", text="Note")
@@ -159,7 +159,7 @@ class PasswordManagerApp(ctk.CTk):
         note = self.note_entry.get()
 
         if not account_name or not username or not password:
-            messagebox.showerror("Input Error", "Account Name, Username, and Password are required!")
+            messagebox.showerror("Input Error", "Website Url, Username, and Password are required!")
             return
 
         add_account(account_name, username, password, note)
@@ -207,7 +207,7 @@ class PasswordManagerApp(ctk.CTk):
         # Labels and Entries for updating
         ctk.CTkLabel(update_window, text="Update Account", font=("Arial", 18)).pack(pady=10)
 
-        ctk.CTkLabel(update_window, text="Account Name:").pack(pady=5)
+        ctk.CTkLabel(update_window, text="Website Url:").pack(pady=5)
         account_name_entry = ctk.CTkEntry(update_window, width=300)
         account_name_entry.insert(0, account_name)  # Pre-fill with current data
         account_name_entry.pack(pady=5)
@@ -234,7 +234,7 @@ class PasswordManagerApp(ctk.CTk):
             updated_note = note_entry.get()
 
             if not updated_account_name or not updated_username or not updated_password:
-                messagebox.showerror("Input Error", "Account Name, Username, and Password are required!")
+                messagebox.showerror("Input Error", "Website Url, Username, and Password are required!")
                 return
 
             update_account(account_id, updated_account_name, updated_username, updated_password, updated_note)

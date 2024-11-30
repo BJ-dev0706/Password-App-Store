@@ -2,19 +2,18 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
+encryption.key
+password_store.db
+
 
 # testing
 /coverage
+/__pycache__
 
 # production
 /build
 
 # misc
-.encryption.key
-.password_store.db
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
