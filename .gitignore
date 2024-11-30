@@ -9,6 +9,7 @@ password_store.db
 # testing
 /coverage
 /__pycache__
+index.py
 
 # production
 /build
