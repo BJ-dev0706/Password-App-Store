@@ -25,15 +25,18 @@ class PasswordManagerApp(ctk.CTk):
         self.sidebar_frame.grid(row=0, column=0, sticky="nsw", padx=20, pady=20)
 
         # Configure grid rows to behave properly
-        self.sidebar_frame.grid_rowconfigure(0, weight=0)  # First label - not resizable
-        self.sidebar_frame.grid_rowconfigure(1, weight=0)  # Website Url field - not resizable
-        self.sidebar_frame.grid_rowconfigure(2, weight=0)  # Username field - not resizable
-        self.sidebar_frame.grid_rowconfigure(3, weight=0)  # Password field - not resizable
-        self.sidebar_frame.grid_rowconfigure(4, weight=0)  # Password entry - not resizable
-        self.sidebar_frame.grid_rowconfigure(5, weight=0)  # Note label - not resizable
-        self.sidebar_frame.grid_rowconfigure(6, weight=0)  # Note entry - not resizable
-        self.sidebar_frame.grid_rowconfigure(7, weight=0)  # Add Account Button - not resizable
-        self.sidebar_frame.grid_rowconfigure(8, weight=1)  # Make the last row stretchable
+        self.sidebar_frame.grid_rowconfigure(0, weight=0)  # Add Account label
+        self.sidebar_frame.grid_rowconfigure(1, weight=0)  # Website Url label
+        self.sidebar_frame.grid_rowconfigure(2, weight=0)  # Website Url entry
+        self.sidebar_frame.grid_rowconfigure(3, weight=0)  # Username label
+        self.sidebar_frame.grid_rowconfigure(4, weight=0)  # Username entry
+        self.sidebar_frame.grid_rowconfigure(5, weight=0)  # Password label
+        self.sidebar_frame.grid_rowconfigure(6, weight=0)  # Password entry
+        self.sidebar_frame.grid_rowconfigure(7, weight=0)  # Note label
+        self.sidebar_frame.grid_rowconfigure(8, weight=0)  # Note entry
+        self.sidebar_frame.grid_rowconfigure(9, weight=0)  # Add Account button
+        self.sidebar_frame.grid_rowconfigure(10, weight=0) # Generate Password button
+        self.sidebar_frame.grid_rowconfigure(11, weight=1) # Stretch bottom space
 
         # Add Account Section
         ctk.CTkLabel(self.sidebar_frame, text="Add Account", font=("Arial", 18)).grid(row=0, column=0, padx=10, pady=(10, 20))
