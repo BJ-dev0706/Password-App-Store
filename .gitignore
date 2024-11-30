@@ -4,12 +4,13 @@
 /node_modules
 encryption.key
 password_store.db
+index.py
 
 
 # testing
 /coverage
 /__pycache__
-index.py
+
 
 # production
 /build
