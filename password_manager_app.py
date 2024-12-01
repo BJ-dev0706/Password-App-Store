@@ -1,9 +1,9 @@
 import customtkinter as ctk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, PhotoImage
 from database import add_account, fetch_all_accounts, delete_account, update_account
 from utils import generate_password
 from encryption import decrypt_password
-
+from PIL import Image, ImageTk
 class PasswordManagerApp(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -14,8 +14,15 @@ class PasswordManagerApp(ctk.CTk):
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
         
-
         self.center_window()
+        
+        icon_path = "img/clipboard.ico"
+        original_image = Image.open(icon_path)
+        icon_size = (20, 20)
+        resized_image = original_image.resize(icon_size, Image.Resampling.LANCZOS)
+
+        self.copy_icon = ctk.CTkImage(resized_image, size=icon_size)
+
 
         # Main Layout
         self.grid_rowconfigure(0, weight=1)
@@ -202,12 +209,10 @@ class PasswordManagerApp(ctk.CTk):
         def copy_to_clipboard(value):
             self.clipboard_clear()
             self.clipboard_append(value)
-            self.update()  # Update the clipboard content
+            self.update()
 
-        # Label for header
         ctk.CTkLabel(update_window, text="Update Account", font=("Arial", 20, "bold")).pack(pady=20)
 
-        # Helper function to create a field with label, entry, and copy button
         def create_field(label_text, default_value, parent_frame, show=""):
             field_frame = ctk.CTkFrame(parent_frame, fg_color="transparent")
             field_frame.pack(fill="x", pady=10, padx=20)
@@ -217,8 +222,14 @@ class PasswordManagerApp(ctk.CTk):
             entry.insert(0, default_value)
             entry.pack(side="left", padx=5)
 
-            copy_button = ctk.CTkButton(field_frame, text="Copy", width=60, corner_radius=8, 
-                                        command=lambda: copy_to_clipboard(entry.get()))
+            copy_button = ctk.CTkButton(
+                field_frame,
+                text="",
+                width=60,
+                corner_radius=8,
+                image=self.copy_icon,
+                compound="left",
+                command=lambda: copy_to_clipboard(entry.get()))
             copy_button.pack(side="right", padx=5)
 
             return entry
