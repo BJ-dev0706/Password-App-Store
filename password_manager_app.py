@@ -107,14 +107,44 @@ class PasswordManagerApp(ctk.CTk):
         self.content_frame.grid(row=0, column=1, sticky="nsew", padx=20, pady=20)
         self.content_frame.grid_columnconfigure(0, weight=1)
 
-        ctk.CTkLabel(self.content_frame, text="View Accounts", font=("Arial", 18)).pack(pady=10)
+        ctk.CTkLabel(self.content_frame, text="View Accounts", font=("Arial", 12)).pack(pady=10)
+        # Treeview Styling
+        style = ttk.Style(self)
+        style.theme_use("clam")
 
-        # Create a frame for the Treeview and Scrollbar to align them properly
-        tree_frame = ctk.CTkFrame(self.content_frame, fg_color="#fff")
+        # Configure Treeview appearance
+        style.configure("Custom.Treeview",
+                        background="#333333",
+                        foreground="white",
+                        fieldbackground="#2b2b2b",
+                        rowheight=30,            
+                        borderwidth=1,           
+                        relief="solid")          
+
+        # Configure Heading appearance
+        style.configure("Custom.Treeview.Heading",
+                        background="#444444",
+                        foreground="white",
+                        font=("Arial", 12),
+                        borderwidth=1,
+                        relief="solid")
+
+        # Apply selection styling
+        style.map("Custom.Treeview",
+                background=[("selected", "#1f6aa5")],
+                foreground=[("selected", "white")])
+
+        # Embed the Treeview in a CTkFrame for a consistent look
+        tree_frame = ctk.CTkFrame(self.content_frame, corner_radius=10, border_width=1, border_color="#444444")  # Matching the left input box border
         tree_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
-        # Treeview to display accounts
-        self.tree = ttk.Treeview(tree_frame, columns=("ID", "Account", "Username", "Password", "Note"), show="headings")
+        # Create Treeview widget with the modified style
+        self.tree = ttk.Treeview(tree_frame, 
+                                columns=("ID", "Account", "Username", "Password", "Note"), 
+                                show="headings", 
+                                style="Custom.Treeview")
+        self.tree.pack(fill="both", expand=True)
+
         self.tree.heading("ID", text="ID")
         self.tree.heading("Account", text="Website Url")
         self.tree.heading("Username", text="Username")
