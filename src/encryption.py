@@ -2,7 +2,7 @@ import os
 from cryptography.fernet import Fernet
 
 # Encryption key management
-KEY_FILE = "encryption.key"
+KEY_FILE = "appdata/encryption.key"
 
 def load_key():
     """Load or generate an encryption key."""

@@ -1,8 +1,8 @@
 import customtkinter as ctk
 from tkinter import ttk, messagebox, PhotoImage
-from database import add_account, fetch_all_accounts, delete_account, update_account
-from utils import generate_password, need_update
-from encryption import decrypt_password
+from src.database import add_account, fetch_all_accounts, delete_account, update_account
+from src.utils import generate_password, need_update
+from src.encryption import decrypt_password
 from PIL import Image, ImageTk
 class PasswordManagerApp(ctk.CTk):
     def __init__(self):

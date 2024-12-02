@@ -1,7 +1,7 @@
 import sqlite3
-from encryption import encrypt_password, decrypt_password
+from src.encryption import encrypt_password, decrypt_password
 
-DB_NAME = "password_store.db"
+DB_NAME = "appdata/password_store.db"
 
 def init_db():
     """Initialize SQLite database."""

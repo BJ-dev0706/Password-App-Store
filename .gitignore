@@ -2,8 +2,8 @@
 
 # dependencies
 /node_modules
-encryption.key
-password_store.db
+/appdata/encryption.key
+/appdata/password_store.db
 index.py
 
 

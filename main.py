@@ -1,5 +1,5 @@
-from database import init_db
-from password_manager_app import PasswordManagerApp
+from src.database import init_db
+from src.password_manager_app import PasswordManagerApp
 
 init_db()
 
