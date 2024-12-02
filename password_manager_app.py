@@ -32,22 +32,20 @@ class PasswordManagerApp(ctk.CTk):
         self.sidebar_frame = ctk.CTkFrame(self, width=300, corner_radius=10)
         self.sidebar_frame.grid(row=0, column=0, sticky="nsw", padx=20, pady=20)
 
-        # Configure grid rows to behave properly
-        self.sidebar_frame.grid_rowconfigure(0, weight=0)  # Add Account label
-        self.sidebar_frame.grid_rowconfigure(1, weight=0)  # Website Url label
-        self.sidebar_frame.grid_rowconfigure(2, weight=0)  # Website Url entry
-        self.sidebar_frame.grid_rowconfigure(3, weight=0)  # Username label
-        self.sidebar_frame.grid_rowconfigure(4, weight=0)  # Username entry
-        self.sidebar_frame.grid_rowconfigure(5, weight=0)  # Password label
-        self.sidebar_frame.grid_rowconfigure(6, weight=0)  # Password entry
-        self.sidebar_frame.grid_rowconfigure(7, weight=0)  # Reveal/Hide Password button
-        self.sidebar_frame.grid_rowconfigure(8, weight=0)  # Note label
-        self.sidebar_frame.grid_rowconfigure(9, weight=0)  # Note entry
-        self.sidebar_frame.grid_rowconfigure(10, weight=0) # Generate Password button
-        self.sidebar_frame.grid_rowconfigure(11, weight=0) # Add Account button
-        self.sidebar_frame.grid_rowconfigure(12, weight=1) # Stretch bottom space
+        self.sidebar_frame.grid_rowconfigure(0, weight=0)
+        self.sidebar_frame.grid_rowconfigure(1, weight=0)
+        self.sidebar_frame.grid_rowconfigure(2, weight=0)
+        self.sidebar_frame.grid_rowconfigure(3, weight=0)
+        self.sidebar_frame.grid_rowconfigure(4, weight=0)
+        self.sidebar_frame.grid_rowconfigure(5, weight=0)
+        self.sidebar_frame.grid_rowconfigure(6, weight=0)
+        self.sidebar_frame.grid_rowconfigure(7, weight=0)
+        self.sidebar_frame.grid_rowconfigure(8, weight=0)
+        self.sidebar_frame.grid_rowconfigure(9, weight=0)
+        self.sidebar_frame.grid_rowconfigure(10, weight=0)
+        self.sidebar_frame.grid_rowconfigure(11, weight=0)
+        self.sidebar_frame.grid_rowconfigure(12, weight=1)
 
-        # Add Account Section
         ctk.CTkLabel(self.sidebar_frame, text="Add Account", font=("Arial", 18)).grid(row=0, column=0, padx=10, pady=(10, 20))
 
         ctk.CTkLabel(self.sidebar_frame, text="Website Url:").grid(row=1, column=0, padx=10, pady=5)
@@ -62,12 +60,11 @@ class PasswordManagerApp(ctk.CTk):
         self.password_entry = ctk.CTkEntry(self.sidebar_frame, show="*", width=250)
         self.password_entry.grid(row=6, column=0, padx=10, pady=5)
         
-        # Reveal/Hide Password Checkbox
         def toggle_password_visibility():
             if self.show_password_checkbox.get():
-                self.password_entry.configure(show="")  # Show password
+                self.password_entry.configure(show="")
             else:
-                self.password_entry.configure(show="*")  # Hide password
+                self.password_entry.configure(show="*")
 
         self.show_password_checkbox = ctk.CTkCheckBox(
             self.sidebar_frame,
@@ -81,12 +78,11 @@ class PasswordManagerApp(ctk.CTk):
         self.note_entry.grid(row=9, column=0, padx=10, pady=0)
 
 
-        # Generate Password Button
         def insert_generated_password():
             try:
-                generated_password = generate_password(length=12)  # Default length: 12
-                self.password_entry.delete(0, 'end')  # Clear current password field
-                self.password_entry.insert(0, generated_password)  # Insert generated password
+                generated_password = generate_password(length=12)
+                self.password_entry.delete(0, 'end')
+                self.password_entry.insert(0, generated_password)
             except ValueError as e:
                 messagebox.showerror("Error", str(e))
 
@@ -97,22 +93,17 @@ class PasswordManagerApp(ctk.CTk):
         )
         self.generate_password_button.grid(row=10, column=0, padx=10, pady=10)
 
-        # Add Account Button
         self.add_account_button = ctk.CTkButton(self.sidebar_frame, text="Add Account", command=self.add_account)
         self.add_account_button.grid(row=11, column=0, padx=10, pady=5)
 
-
-        # Content Frame (Right Section)
         self.content_frame = ctk.CTkFrame(self, corner_radius=10)
         self.content_frame.grid(row=0, column=1, sticky="nsew", padx=20, pady=20)
         self.content_frame.grid_columnconfigure(0, weight=1)
 
         ctk.CTkLabel(self.content_frame, text="View Accounts", font=("Arial", 12)).pack(pady=10)
-        # Treeview Styling
         style = ttk.Style(self)
         style.theme_use("clam")
 
-        # Configure Treeview appearance
         style.configure("Custom.Treeview",
                         background="#333333",
                         foreground="white",
@@ -121,7 +112,6 @@ class PasswordManagerApp(ctk.CTk):
                         borderwidth=1,           
                         relief="solid")          
 
-        # Configure Heading appearance
         style.configure("Custom.Treeview.Heading",
                         background="#444444",
                         foreground="white",
@@ -129,16 +119,13 @@ class PasswordManagerApp(ctk.CTk):
                         borderwidth=1,
                         relief="solid")
 
-        # Apply selection styling
         style.map("Custom.Treeview",
                 background=[("selected", "#1f6aa5")],
                 foreground=[("selected", "white")])
 
-        # Embed the Treeview in a CTkFrame for a consistent look
-        tree_frame = ctk.CTkFrame(self.content_frame, corner_radius=10, border_width=1, border_color="#444444")  # Matching the left input box border
+        tree_frame = ctk.CTkFrame(self.content_frame, corner_radius=10, border_width=1, border_color="#444444")
         tree_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
-        # Create Treeview widget with the modified style
         self.tree = ttk.Treeview(tree_frame, 
                                 columns=("ID", "Account", "Username", "Password", "Note"), 
                                 show="headings", 
@@ -157,39 +144,29 @@ class PasswordManagerApp(ctk.CTk):
         self.tree.column("Note", width=200, anchor="center")
         self.tree.pack(fill="both", expand=True, side="left")
 
-        # Add scrollbar for the Treeview and link it to the Treeview widget
         scrollbar = ttk.Scrollbar(tree_frame, orient="vertical", command=self.tree.yview)
         self.tree.configure(yscrollcommand=scrollbar.set)
         scrollbar.pack(side="right", fill="y")
 
-        # Create a frame for the buttons
         button_frame = ctk.CTkFrame(self.content_frame, fg_color="transparent", corner_radius=0, bg_color="transparent")
 
-        # Pack the button_frame within content_frame
         button_frame.pack(pady=20, anchor="center")
 
-        # Delete Button
         self.delete_button = ctk.CTkButton(button_frame, text="Delete Account", command=self.delete_account)
         self.delete_button.pack(side="left", padx=10)
 
-        # Update Button
         self.update_button = ctk.CTkButton(button_frame, text="Update Account", command=self.update_account)
         self.update_button.pack(side="left", padx=10)
 
-        # Refresh Button
         self.refresh_button = ctk.CTkButton(button_frame, text="Refresh Data", command=self.refresh_data)
         self.refresh_button.pack(side="left", padx=10)
         
-        # Refresh Button
         self.update_button = ctk.CTkButton(button_frame, text="Check Update")
         self.update_button.pack(side="left", padx=10)
 
-        # Load accounts into the Treeview
         self.load_accounts()
 
-        # Bind the double-click event to the method to update account
         self.tree.bind("<Double-1>", self.on_double_click)
-        # Bind the new selection change event
         self.tree.bind("<<TreeviewSelect>>", self.on_tree_selection_change)
 
     def on_double_click(self, event):
@@ -199,10 +176,8 @@ class PasswordManagerApp(ctk.CTk):
             messagebox.showerror("Selection Error", "Please select an account to update!")
             return
 
-        # Get the selected account data
         account_data = self.tree.item(selected_item)["values"]
         
-        # Call the method to update account with the selected data
         self.update_account(account_data)
 
     def update_account(self, account=None):
@@ -215,7 +190,6 @@ class PasswordManagerApp(ctk.CTk):
         account_data = self.tree.item(selected_item)["values"]
         account_id = account_data[0]
 
-        # Fetch the actual account details including the decrypted password
         actual_account = next((a for a in fetch_all_accounts() if a[0] == account_id), None)
 
         if not actual_account:
@@ -224,11 +198,9 @@ class PasswordManagerApp(ctk.CTk):
 
         account_name, username, decrypted_password, note = actual_account[1], actual_account[2], decrypt_password(actual_account[3]), actual_account[4]
 
-        # Create a new Toplevel window
         update_window = ctk.CTkToplevel(self)
         update_window.title("Update Account")
 
-        # Consistent window size
         screen_width = update_window.winfo_screenwidth()
         screen_height = update_window.winfo_screenheight()
         window_width = 450
@@ -239,7 +211,6 @@ class PasswordManagerApp(ctk.CTk):
 
         update_window.grab_set()
 
-        # Function to copy text to clipboard
         def copy_to_clipboard(value):
             self.clipboard_clear()
             self.clipboard_append(value)
@@ -268,20 +239,15 @@ class PasswordManagerApp(ctk.CTk):
 
             return entry
 
-        # Parent frame for all fields
         fields_frame = ctk.CTkFrame(update_window, fg_color="transparent")
         fields_frame.pack(fill="both", expand=True)
 
-        # Account Name Field
         account_name_entry = create_field("Website Url:", account_name, fields_frame)
 
-        # Username Field
         username_entry = create_field("Username:", username, fields_frame)
 
-        # Password Field
         password_entry = create_field("Password:", decrypted_password, fields_frame, show="*")
 
-        # Toggle Password Visibility
         password_visibility = ctk.BooleanVar(value=False)
 
         def toggle_password_visibility():
@@ -293,24 +259,20 @@ class PasswordManagerApp(ctk.CTk):
         ctk.CTkCheckBox(fields_frame, text="Show Password", variable=password_visibility, 
                         command=toggle_password_visibility).pack(pady=10, padx=20)
 
-        # Note Field
         note_entry = create_field("Note:", note, fields_frame)
 
-        # Buttons Frame
         buttons_frame = ctk.CTkFrame(update_window, fg_color="transparent")
         buttons_frame.pack(pady=20, padx=20, fill="x")
 
-        # Regenerate Password Button
         def regenerate_password():
-            new_password = generate_password(length=12)  # Default length: 12
-            password_entry.delete(0, 'end')  # Clear the current password field
-            password_entry.insert(0, new_password)  # Insert the new generated password
+            new_password = generate_password(length=12)
+            password_entry.delete(0, 'end')
+            password_entry.insert(0, new_password)
 
         reset_password_button = ctk.CTkButton(buttons_frame, text="Regenerate", command=regenerate_password, 
                                             corner_radius=8, width=180, height=40)
         reset_password_button.pack(side="left", padx=10)
 
-        # Update Button
         def update():
             updated_account_name = account_name_entry.get()
             updated_username = username_entry.get()
@@ -350,9 +312,9 @@ class PasswordManagerApp(ctk.CTk):
 
     def refresh_data(self):
         """Refresh the data in the Treeview."""
-        self.show_loading_screen()  # Show loading screen
-        self.load_accounts()        # Reload accounts
-        self.hide_loading_screen()  # Hide loading screen
+        self.show_loading_screen()
+        self.load_accounts()      
+        self.hide_loading_screen()
         messagebox.showinfo("Success", "Data refreshed successfully!")
 
     def add_account(self):
@@ -372,21 +334,16 @@ class PasswordManagerApp(ctk.CTk):
 
     def load_accounts(self):
         """Load all accounts into the Treeview with masked passwords."""
-        # Clear existing rows in the Treeview
         for row in self.tree.get_children():
             self.tree.delete(row)
 
-        # Fetch all accounts and insert them with masked passwords
         accounts = fetch_all_accounts()
         for account in accounts:
-            # Create a masked password with the same number of characters as the actual password
             decrypted_password = decrypt_password(account[3])
             masked_password = '*' * len(decrypted_password)
             
-            # Insert data into the Treeview
             self.tree.insert("", "end", values=(account[0], account[1], account[2], masked_password, account[4]))
 
-    # Changed delete_account to handle multi-selection and disable update_button
     def delete_account(self):
         """Delete selected accounts from the database."""
         selected_items = self.tree.selection()
@@ -394,12 +351,10 @@ class PasswordManagerApp(ctk.CTk):
             messagebox.showerror("Selection Error", "Please select one or more accounts to delete!")
             return
 
-        # Confirm deletion
         confirmation = messagebox.askyesno("Confirm Delete", "Are you sure you want to delete the selected accounts?")
         if not confirmation:
             return
 
-        # Delete all selected accounts
         for item in selected_items:
             account_id = self.tree.item(item)["values"][0]
             delete_account(account_id)
@@ -407,31 +362,25 @@ class PasswordManagerApp(ctk.CTk):
         self.load_accounts()
         messagebox.showinfo("Success", "Selected accounts deleted successfully!")
 
-    # Override Treeview selection binding to handle multiple selections
     def on_tree_selection_change(self, event):
         """Handle changes in Treeview selection."""
         selected_items = self.tree.selection()
 
-        # Disable update button if multiple items are selected
         if len(selected_items) > 1:
             self.update_button.configure(state="disabled")
         else:
             self.update_button.configure(state="normal")
 
     def center_window(self):
-        # Get the screen width and height
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
 
-        # Get the window width and height
         window_width = 1200
         window_height = 550
 
-        # Calculate the position to center the window
         position_top = int(screen_height / 2 - window_height / 2)
         position_right = int(screen_width / 2 - window_width / 2)
 
-        # Set the position of the window
         self.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
     
 if __name__ == "__main__":
