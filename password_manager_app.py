@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from tkinter import ttk, messagebox, PhotoImage
-from appdata.database import add_account, fetch_all_accounts, delete_account, update_account
+from database import add_account, fetch_all_accounts, delete_account, update_account
 from utils import generate_password, need_update
 from encryption import decrypt_password
 from PIL import Image, ImageTk
