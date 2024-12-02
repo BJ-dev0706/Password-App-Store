@@ -1,5 +1,19 @@
 import secrets
 import string
+import requests
+import jsondump
+
+current_version = "1.0.1"
+
+def need_update():
+    try:
+        resp = requests.get("https://pypswd.com/current_version")
+        if resp.status_code == 200:
+            vermap = jsondump.loads(resp.text)
+            ver = vermap['version']
+            return current_version != ver
+    except Exception:
+        return False
 
 def generate_password(length=12):
     """Generate a strong random password."""

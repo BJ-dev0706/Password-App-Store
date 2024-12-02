@@ -1,2 +1,5 @@
 customtkinter
 cryptography
+requests
+jsondump
+Pillow

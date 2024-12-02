@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from tkinter import ttk, messagebox, PhotoImage
 from database import add_account, fetch_all_accounts, delete_account, update_account
-from utils import generate_password
+from utils import generate_password, need_update
 from encryption import decrypt_password
 from PIL import Image, ImageTk
 class PasswordManagerApp(ctk.CTk):
@@ -155,13 +155,13 @@ class PasswordManagerApp(ctk.CTk):
         self.delete_button = ctk.CTkButton(button_frame, text="Delete Account", command=self.delete_account)
         self.delete_button.pack(side="left", padx=10)
 
-        self.update_button = ctk.CTkButton(button_frame, text="Update Account", command=self.update_account)
-        self.update_button.pack(side="left", padx=10)
+        self.update_account_button = ctk.CTkButton(button_frame, text="Update Account", command=self.update_account)
+        self.update_account_button.pack(side="left", padx=10)
 
         self.refresh_button = ctk.CTkButton(button_frame, text="Refresh Data", command=self.refresh_data)
         self.refresh_button.pack(side="left", padx=10)
         
-        self.update_button = ctk.CTkButton(button_frame, text="Check Update")
+        self.update_button = ctk.CTkButton(button_frame, text="Check Update", command=self.check_update)
         self.update_button.pack(side="left", padx=10)
 
         self.load_accounts()
@@ -201,14 +201,13 @@ class PasswordManagerApp(ctk.CTk):
         update_window = ctk.CTkToplevel(self)
         update_window.title("Update Account")
 
-        screen_width = update_window.winfo_screenwidth()
-        screen_height = update_window.winfo_screenheight()
         window_width = 450
         window_height = 400
-        position_top = int(screen_height / 2 - window_height / 2)
-        position_right = int(screen_width / 2 - window_width / 2)
+        position_top = int(update_window.winfo_screenheight() / 2 - window_height / 2)
+        position_right = int(update_window.winfo_screenwidth() / 2 - window_width / 2)
         update_window.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
 
+        update_window.update_idletasks()
         update_window.grab_set()
 
         def copy_to_clipboard(value):
@@ -317,6 +316,13 @@ class PasswordManagerApp(ctk.CTk):
         self.hide_loading_screen()
         messagebox.showinfo("Success", "Data refreshed successfully!")
 
+    def check_update(self, show_msg = True):
+        """Check product update from the server"""
+        if need_update() == True:
+            messagebox.showinfo("Check Update", "Update available. Please download and install it!")
+        elif show_msg:
+            messagebox.showinfo("Check Update", "No updates available!")
+
     def add_account(self):
         """Add an account to the database."""
         account_name = self.account_name_entry.get()
@@ -367,9 +373,9 @@ class PasswordManagerApp(ctk.CTk):
         selected_items = self.tree.selection()
 
         if len(selected_items) > 1:
-            self.update_button.configure(state="disabled")
+            self.update_account_button.configure(state="disabled")
         else:
-            self.update_button.configure(state="normal")
+            self.update_account_button.configure(state="normal")
 
     def center_window(self):
         screen_width = self.winfo_screenwidth()
