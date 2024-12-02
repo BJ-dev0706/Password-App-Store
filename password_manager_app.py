@@ -179,6 +179,10 @@ class PasswordManagerApp(ctk.CTk):
         # Refresh Button
         self.refresh_button = ctk.CTkButton(button_frame, text="Refresh Data", command=self.refresh_data)
         self.refresh_button.pack(side="left", padx=10)
+        
+        # Refresh Button
+        self.update_button = ctk.CTkButton(button_frame, text="Check Update")
+        self.update_button.pack(side="left", padx=10)
 
         # Load accounts into the Treeview
         self.load_accounts()
