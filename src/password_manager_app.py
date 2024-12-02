@@ -8,7 +8,7 @@ class PasswordManagerApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("Password Manager App")
+        self.title("PypswdStore")
         self.geometry("1200x510")
         self.minsize(1200, 520)
         ctk.set_appearance_mode("dark")
