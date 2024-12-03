@@ -1,10 +1,16 @@
 import sqlite3
+import os
 from src.encryption import encrypt_password, decrypt_password
 
 DB_NAME = "appdata/password_store.db"
 
 def init_db():
     """Initialize SQLite database."""
+    # Ensure the appdata folder exists
+    if not os.path.exists('appdata'):
+        os.makedirs('appdata')
+    
+    # Connect to the SQLite database (it will create the file if it doesn't exist)
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
     cursor.execute("""

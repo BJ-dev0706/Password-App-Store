@@ -6,6 +6,10 @@ KEY_FILE = "appdata/encryption.key"
 
 def load_key():
     """Load or generate an encryption key."""
+    # Ensure the appdata folder exists
+    if not os.path.exists('appdata'):
+        os.makedirs('appdata')
+    
     if not os.path.exists(KEY_FILE):
         key = Fernet.generate_key()
         with open(KEY_FILE, "wb") as key_file:
