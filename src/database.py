@@ -1,14 +1,22 @@
 import sqlite3
 import os
+import platform
 from src.encryption import encrypt_password, decrypt_password
 
-DB_NAME = "appdata/password_store.db"
+# Determine the database file location based on OS
+if platform.system() == "Darwin":  # macOS
+    DB_NAME = os.path.expanduser('~/Library/Application Support/PswdManager/password_store.db')
+elif platform.system() == "Windows":  # Windows
+    DB_NAME = r'C:\Program Files\PswdManager\password_store.db'
+else:  # Default to appdata for other systems
+    DB_NAME = "appdata/password_store.db"
 
 def init_db():
     """Initialize SQLite database."""
-    # Ensure the appdata folder exists
-    if not os.path.exists('appdata'):
-        os.makedirs('appdata')
+    # Ensure the folder exists
+    db_dir = os.path.dirname(DB_NAME)
+    if not os.path.exists(db_dir):
+        os.makedirs(db_dir)
     
     # Connect to the SQLite database (it will create the file if it doesn't exist)
     conn = sqlite3.connect(DB_NAME)

@@ -1,15 +1,22 @@
 import os
+import platform
 from cryptography.fernet import Fernet
 
-# Encryption key management
-KEY_FILE = "appdata/encryption.key"
+# Determine key file location based on OS
+if platform.system() == "Darwin":  # macOS
+    KEY_FILE = os.path.expanduser('~/Library/Application Support/PswdManager/encryption.key')
+elif platform.system() == "Windows":  # Windows
+    KEY_FILE = r'C:\Program Files\PswdManager\encryption.key'
+else:  # Default to appdata for other systems
+    KEY_FILE = "appdata/encryption.key"
 
 def load_key():
     """Load or generate an encryption key."""
-    # Ensure the appdata folder exists
-    if not os.path.exists('appdata'):
-        os.makedirs('appdata')
-    
+    # Ensure the folder exists
+    key_dir = os.path.dirname(KEY_FILE)
+    if not os.path.exists(key_dir):
+        os.makedirs(key_dir)
+
     if not os.path.exists(KEY_FILE):
         key = Fernet.generate_key()
         with open(KEY_FILE, "wb") as key_file:
